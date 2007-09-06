@@ -1,5 +1,5 @@
 %define ver 0.14.1
-%define rel 1
+%define rel 2
 
 Name:		cutecom
 Version:	%ver
@@ -10,7 +10,7 @@ License:	GPL
 Group:		Communications
 Source:		http://cutecom.sourceforge.net/%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
-BuildRequires:	qt3-devel mandriva-create-kde-mdk-menu kdelibs-common
+BuildRequires:	qt3-devel kdelibs-common desktop-file-utils
 
 %description
 CuteCom is a graphical serial terminal, like minicom. It is aimed mainly at
@@ -28,8 +28,13 @@ devices.
 rm -Rf %{buildroot}
 %makeinstall INSTALL_ROOT=%{buildroot}
 mv %{buildroot}/usr/local/bin %{buildroot}/%{_prefix}
-install -d %{buildroot}/%{_menudir}
-kdedesktop2mdkmenu.pl %{name} "More Applications/Communications" %{buildroot}/%{_datadir}/applnk/Utilities/cutecom.desktop %{buildroot}/%{_menudir}/%{name}
+mkdir -p %{buildroot}/usr/share/applications
+mv %{buildroot}/usr/share/applnk/Utilities/cutecom.desktop %{buildroot}/usr/share/applications/cutecom.desktop
+
+desktop-file-install --vendor="" \
+  --remove-category="Application" \
+  --add-category="System;Settings" \
+  --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
 
 %clean
 rm -Rf %{buildroot}
@@ -43,8 +48,7 @@ rm -Rf %{buildroot}
 %files
 %defattr(-,root,root)
 %{_bindir}/cutecom
-%{_datadir}/applnk/Utilities/cutecom.desktop
-%{_menudir}/%{name}
+%{_datadir}/applications/cutecom.desktop
 %doc README Changelog
 
 
