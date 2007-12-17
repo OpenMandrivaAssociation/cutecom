@@ -9,7 +9,6 @@ Summary:	Graphical serial terminal program
 License:	GPL
 Group:		Communications
 Source:		http://cutecom.sourceforge.net/%{name}-%{version}.tar.gz
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 BuildRequires:	qt3-devel kdelibs-common desktop-file-utils
 
 %description
