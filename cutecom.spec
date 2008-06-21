@@ -10,7 +10,7 @@ License:	GPL
 Group:		Communications
 Source:		http://cutecom.sourceforge.net/%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
-BuildRequires:	qt4-devel kdelibs-common desktop-file-utils
+BuildRequires:	qt4-devel kdelibs-common desktop-file-utils cmake
 
 %description
 CuteCom is a graphical serial terminal, like minicom. It is aimed mainly at
