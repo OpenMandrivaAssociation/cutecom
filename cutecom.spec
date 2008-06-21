@@ -1,5 +1,5 @@
-%define ver 0.14.1
-%define rel 2
+%define ver 0.20.0
+%define rel 1
 
 Name:		cutecom
 Version:	%ver
@@ -10,7 +10,7 @@ License:	GPL
 Group:		Communications
 Source:		http://cutecom.sourceforge.net/%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
-BuildRequires:	qt3-devel kdelibs-common desktop-file-utils
+BuildRequires:	qt4-devel kdelibs-common desktop-file-utils
 
 %description
 CuteCom is a graphical serial terminal, like minicom. It is aimed mainly at
@@ -21,20 +21,20 @@ devices.
 %setup -q
 
 %build
-%configure
+cmake -DCMAKE_INSTALL_PREFIX=%{_prefix} .
+perl -pi -e 's,\${CMAKE_INSTALL_PREFIX}/man,%{_mandir},g' cmake_install.cmake
 %make
 
 %install
 rm -Rf %{buildroot}
-%makeinstall INSTALL_ROOT=%{buildroot}
-mv %{buildroot}/usr/local/bin %{buildroot}/%{_prefix}
-mkdir -p %{buildroot}/usr/share/applications
-mv %{buildroot}/usr/share/applnk/Utilities/cutecom.desktop %{buildroot}/usr/share/applications/cutecom.desktop
+%makeinstall_std
+rm -Rf %{buildroot}/opt/
+#mkdir -p %{buildroot}/%{_datadir}/applications
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
   --add-category="System;Settings" \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
+  --dir $RPM_BUILD_ROOT%{_datadir}/applications cutecom.desktop
 
 %clean
 rm -Rf %{buildroot}
@@ -53,6 +53,7 @@ rm -Rf %{buildroot}
 %defattr(-,root,root)
 %{_bindir}/cutecom
 %{_datadir}/applications/cutecom.desktop
+%{_mandir}/man1/cutecom.1*
 %doc README Changelog
 
 
