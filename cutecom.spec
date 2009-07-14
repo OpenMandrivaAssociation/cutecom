@@ -2,7 +2,7 @@
 %define rel 1
 
 Name:		cutecom
-Version:	0.21.0
+Version:	0.22.0
 Release:	%mkrel %rel
 URL:		http://cutecom.sourceforge.net/
 Summary:	Graphical serial terminal program
