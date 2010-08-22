@@ -10,7 +10,7 @@ License:	GPL
 Group:		Communications
 Source:		http://cutecom.sourceforge.net/%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
-BuildRequires:	qt4-devel kdelibs-common desktop-file-utils cmake
+BuildRequires:	qt4-devel desktop-file-utils cmake
 
 %description
 CuteCom is a graphical serial terminal, like minicom. It is aimed mainly at
@@ -21,15 +21,12 @@ devices.
 %setup -q
 
 %build
-cmake -DCMAKE_INSTALL_PREFIX=%{_prefix} .
-perl -pi -e 's,\${CMAKE_INSTALL_PREFIX}/man,%{_mandir},g' cmake_install.cmake
+%cmake
 %make
 
 %install
 rm -Rf %{buildroot}
-%makeinstall_std
-rm -Rf %{buildroot}/opt/
-#mkdir -p %{buildroot}/%{_datadir}/applications
+%makeinstall_std -C build
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
@@ -55,5 +52,3 @@ rm -Rf %{buildroot}
 %{_datadir}/applications/cutecom.desktop
 %{_mandir}/man1/cutecom.1*
 %doc README Changelog
-
-
