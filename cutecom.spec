@@ -4,7 +4,7 @@
 Name:		cutecom
 Version:	0.22.0
 Release:	%mkrel %rel
-URL:		http://cutecom.sourceforge.net/
+URL:		https://cutecom.sourceforge.net/
 Summary:	Graphical serial terminal program
 License:	GPL
 Group:		Communications
